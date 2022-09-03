@@ -1,7 +1,6 @@
 package com.example.jettodoapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.jettodoapp.components.EditDialog
+import com.example.jettodoapp.components.TaskList
 import com.example.jettodoapp.ui.theme.JetTodoAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,6 +49,11 @@ fun MainContent() {
         }
     }) {
         val tasks by viewModel.tasks.collectAsState(initial = emptyList())
-        Log.d("COUNT", tasks.size.toString())
+
+        TaskList(
+            tasks = tasks,
+            onClickRow = { /* todo */ },
+            onClickDelete = { /* todo */ }
+        )
     }
 }
