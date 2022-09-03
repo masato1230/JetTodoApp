@@ -12,6 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
+    var isShowDialog by mutableStateOf(false)
+
     var title by mutableStateOf("")
     var description by mutableStateOf("")
 
