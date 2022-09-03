@@ -1,6 +1,7 @@
 package com.example.jettodoapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.jettodoapp.components.EditDialog
@@ -45,5 +48,7 @@ fun MainContent() {
             Icon(imageVector = Icons.Default.Add, contentDescription = "新規作成")
         }
     }) {
+        val tasks by viewModel.tasks.collectAsState(initial = emptyList())
+        Log.d("COUNT", tasks.size.toString())
     }
 }
