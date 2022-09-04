@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,9 +16,15 @@ import com.example.jettodoapp.MainViewModel
 fun EditDialog() {
     val viewModel = hiltViewModel<MainViewModel>()
 
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.resetProperties()
+        }
+    }
+
     AlertDialog(
         onDismissRequest = { viewModel.isShowDialog = false },
-        title = { Text(text = "タスク新規作成") },
+        title = { Text(text = if (viewModel.isEditing) "タスク更新" else "タスク新規作成") },
         text = {
             Column {
                 Text(text = "タイトル")
@@ -49,7 +56,11 @@ fun EditDialog() {
                     modifier = Modifier.width(120.dp),
                     onClick = {
                         viewModel.isShowDialog = false
-                        viewModel.createTask()
+                        if (viewModel.isEditing) {
+                            viewModel.updateTask()
+                        } else {
+                            viewModel.createTask()
+                        }
                     },
                 ) {
                     Text(text = "OK")

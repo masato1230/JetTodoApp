@@ -15,10 +15,20 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
     var isShowDialog by mutableStateOf(false)
 
+    private var editingTask: Task? = null
+    val isEditing: Boolean
+        get() = editingTask != null
+
     var title by mutableStateOf("")
     var description by mutableStateOf("")
 
     val tasks = taskDao.loadAllTasks().distinctUntilChanged()
+
+    fun setEditingTask(task: Task) {
+        editingTask = task
+        title = task.title
+        description = task.description
+    }
 
     fun createTask() {
         viewModelScope.launch {
@@ -32,5 +42,21 @@ class MainViewModel @Inject constructor(private val taskDao: TaskDao) : ViewMode
         viewModelScope.launch {
             taskDao.deleteTask(task)
         }
+    }
+
+    fun updateTask() {
+        editingTask?.let { task ->
+            viewModelScope.launch {
+                task.title = title
+                task.description = description
+                taskDao.updateTask(task)
+            }
+        }
+    }
+
+    fun resetProperties() {
+        editingTask = null
+        title = ""
+        description = ""
     }
 }

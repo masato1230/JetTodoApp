@@ -52,7 +52,10 @@ fun MainContent() {
 
         TaskList(
             tasks = tasks,
-            onClickRow = { /* todo */ },
+            onClickRow = {
+                viewModel.setEditingTask(it)
+                viewModel.isShowDialog = true
+            },
             onClickDelete = { viewModel.deleteTask(it) }
         )
     }
