@@ -26,12 +26,13 @@ fun TaskRow(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClickRow(task) }
             .padding(5.dp),
         elevation = 5.dp,
     ) {
         Row(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .clickable { onClickRow(task) }
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(text = task.title)
