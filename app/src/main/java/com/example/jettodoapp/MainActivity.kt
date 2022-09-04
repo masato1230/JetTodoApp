@@ -53,7 +53,7 @@ fun MainContent() {
         TaskList(
             tasks = tasks,
             onClickRow = { /* todo */ },
-            onClickDelete = { /* todo */ }
+            onClickDelete = { viewModel.deleteTask(it) }
         )
     }
 }
